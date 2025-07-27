@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Martín Pérez - Digital Business Card</title>
+  <title>Martín Pérez - Premium Digital Experience</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
     
     * {
       margin: 0;
@@ -13,9 +14,19 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --primary-gradient: linear-gradient(135deg, #0A0A0F 0%, #1A1A2E 25%, #16213E 50%, #0F3460 75%, #533483 100%);
+      --accent-gold: #D4AF37;
+      --accent-platinum: #E5E4E2;
+      --glass-light: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.12);
+      --shadow-deep: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+      --shadow-glow: 0 0 40px rgba(212, 175, 55, 0.15);
+    }
+
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--primary-gradient);
       color: #ffffff;
       min-height: 100vh;
       display: flex;
@@ -24,56 +35,124 @@
       padding: 1rem;
       position: relative;
       overflow: hidden;
+      cursor: none;
     }
 
-    /* Subtle animated background */
-    body::before {
-      content: '';
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(45deg, var(--accent-gold), var(--accent-platinum));
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: all 0.1s ease;
+      mix-blend-mode: difference;
+    }
+
+    .cursor-follower {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: all 0.15s ease;
+    }
+
+    /* Dynamic background with particles */
+    .background-container {
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
-      background: 
-        radial-gradient(circle at 20% 20%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(255, 121, 198, 0.08) 0%, transparent 50%);
-      animation: backgroundShift 20s ease-in-out infinite;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
 
-    @keyframes backgroundShift {
-      0%, 100% { 
-        opacity: 0.6;
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--accent-gold);
+      border-radius: 50%;
+      opacity: 0;
+      animation: particleFloat 8s infinite linear;
+    }
+
+    @keyframes particleFloat {
+      0% { 
+        opacity: 0; 
+        transform: translateY(100vh) translateX(0px) scale(0); 
       }
-      50% { 
-        opacity: 0.8;
+      10% { 
+        opacity: 1; 
+        transform: translateY(90vh) translateX(10px) scale(1); 
       }
+      90% { 
+        opacity: 1; 
+        transform: translateY(10vh) translateX(-10px) scale(1); 
+      }
+      100% { 
+        opacity: 0; 
+        transform: translateY(0vh) translateX(0px) scale(0); 
+      }
+    }
+
+    /* Geometric background patterns */
+    .bg-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle at 25% 25%, rgba(212, 175, 55, 0.02) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(229, 228, 226, 0.01) 0%, transparent 50%),
+        linear-gradient(45deg, transparent 49%, rgba(212, 175, 55, 0.01) 50%, transparent 51%);
+      background-size: 100px 100px, 150px 150px, 200px 200px;
+      animation: patternShift 20s ease-in-out infinite;
+    }
+
+    @keyframes patternShift {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(-10px, -10px) rotate(0.5deg); }
+      66% { transform: translate(10px, -5px) rotate(-0.5deg); }
+    }
+
+    /* Main card container */
+    .card-container {
+      position: relative;
+      perspective: 1200px;
+      transform-style: preserve-3d;
     }
 
     .card {
       position: relative;
-      z-index: 10;
-      max-width: 450px;
+      max-width: 460px;
       width: 100%;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(25px);
-      border: 2px solid rgba(255, 255, 255, 0.15);
-      border-radius: 32px;
+      background: var(--glass-light);
+      backdrop-filter: blur(30px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
       padding: 3rem 2.5rem;
       text-align: center;
       box-shadow: 
-        0 30px 60px rgba(0, 0, 0, 0.6),
-        0 0 100px rgba(120, 119, 198, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.2),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.1);
-      transform: translateY(0) rotateX(0deg);
-      transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      animation: cardEntrance 1s ease-out, cardFloat 12s ease-in-out infinite;
+        var(--shadow-deep),
+        var(--shadow-glow),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+      transform-style: preserve-3d;
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      animation: cardEntrance 1.2s ease-out;
     }
 
     @keyframes cardEntrance {
       0% {
         opacity: 0;
-        transform: translateY(50px) rotateX(15deg) scale(0.9);
+        transform: translateY(60px) rotateX(25deg) scale(0.8);
       }
       100% {
         opacity: 1;
@@ -81,144 +160,169 @@
       }
     }
 
-    @keyframes cardFloat {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-6px); }
-    }
-
+    /* Premium border animation */
     .card::before {
       content: '';
       position: absolute;
-      inset: -2px;
-      border-radius: 32px;
-      padding: 2px;
+      inset: -1px;
+      border-radius: 24px;
+      padding: 1px;
       background: linear-gradient(135deg, 
-        rgba(255, 255, 255, 0.3) 0%,
-        rgba(120, 119, 198, 0.2) 25%,
-        rgba(255, 121, 198, 0.2) 50%,
-        rgba(64, 224, 208, 0.2) 75%,
-        rgba(255, 255, 255, 0.1) 100%);
+        var(--accent-gold) 0%,
+        var(--accent-platinum) 25%,
+        rgba(255, 255, 255, 0.1) 50%,
+        var(--accent-platinum) 75%,
+        var(--accent-gold) 100%);
       mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       mask-composite: xor;
       -webkit-mask-composite: xor;
-      animation: borderGlow 4s ease-in-out infinite;
+      animation: borderRotate 6s linear infinite;
     }
 
-    @keyframes borderGlow {
-      0%, 100% { opacity: 0.5; }
-      50% { opacity: 0.8; }
+    @keyframes borderRotate {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
     }
 
-    .card:hover {
-      transform: translateY(-15px) rotateX(-2deg);
-      box-shadow: 
-        0 40px 80px rgba(0, 0, 0, 0.7),
-        0 0 120px rgba(120, 119, 198, 0.2),
-        inset 0 2px 0 rgba(255, 255, 255, 0.25);
+    /* Enhanced logo section */
+    .logo-section {
+      position: relative;
+      margin-bottom: 3rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
     }
 
     .logo-container {
       position: relative;
-      margin-bottom: 2.5rem;
       display: inline-block;
+      animation: logoFloat 8s ease-in-out infinite;
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0px) rotateY(0deg); }
+      25% { transform: translateY(-8px) rotateY(2deg); }
+      50% { transform: translateY(-4px) rotateY(0deg); }
+      75% { transform: translateY(-12px) rotateY(-2deg); }
     }
 
     .logo {
-      filter: drop-shadow(0 8px 25px rgba(0, 0, 0, 0.4));
-      transition: all 0.4s ease;
+      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+      transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
     .logo:hover {
-      transform: scale(1.08) rotateY(5deg);
-      filter: drop-shadow(0 12px 35px rgba(120, 119, 198, 0.3));
+      transform: scale(1.05) rotateY(5deg) rotateX(2deg);
+      filter: drop-shadow(0 15px 40px rgba(212, 175, 55, 0.2));
     }
 
-    .logo-glow {
+    /* Premium logo glow effect */
+    .logo-aura {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 220px;
-      height: 220px;
-      background: radial-gradient(circle, 
-        rgba(120, 119, 198, 0.3) 0%,
-        rgba(255, 121, 198, 0.2) 30%,
-        rgba(64, 224, 208, 0.1) 60%,
-        transparent 80%);
+      width: 280px;
+      height: 280px;
+      background: conic-gradient(
+        from 0deg,
+        var(--accent-gold) 0deg,
+        transparent 60deg,
+        var(--accent-platinum) 120deg,
+        transparent 180deg,
+        var(--accent-gold) 240deg,
+        transparent 300deg
+      );
       border-radius: 50%;
-      animation: logoGlow 6s ease-in-out infinite;
+      opacity: 0.1;
+      animation: auraRotate 12s linear infinite;
+      z-index: -1;
     }
 
-    @keyframes logoGlow {
-      0%, 100% { 
-        opacity: 0.4; 
-        transform: translate(-50%, -50%) scale(1) rotate(0deg); 
-      }
-      33% { 
-        opacity: 0.7; 
-        transform: translate(-50%, -50%) scale(1.1) rotate(120deg); 
-      }
-      66% { 
-        opacity: 0.5; 
-        transform: translate(-50%, -50%) scale(0.9) rotate(240deg); 
-      }
+    @keyframes auraRotate {
+      0% { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
+      50% { transform: translate(-50%, -50%) rotate(180deg) scale(1.1); }
+      100% { transform: translate(-50%, -50%) rotate(360deg) scale(1); }
     }
 
+    /* Typography enhancements */
     .name {
-      font-size: 2.75rem;
-      font-weight: 900;
+      font-family: 'Space Grotesk', 'Inter', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
       margin-bottom: 0.5rem;
       background: linear-gradient(135deg, 
         #ffffff 0%,
-        #e0e7ff 25%,
-        #c7d2fe 50%,
-        #a5b4fc 75%,
-        #8b5cf6 100%);
+        var(--accent-platinum) 25%,
+        var(--accent-gold) 50%,
+        var(--accent-platinum) 75%,
+        #ffffff 100%);
+      background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.02em;
       line-height: 1.1;
-      text-shadow: 0 4px 20px rgba(139, 92, 246, 0.3);
-      animation: nameShimmer 3s ease-in-out infinite;
+      animation: nameShimmer 4s ease-in-out infinite;
+      position: relative;
     }
 
     @keyframes nameShimmer {
       0%, 100% { 
         background-position: 0% 50%; 
-        transform: translateY(0px);
       }
       50% { 
         background-position: 100% 50%; 
-        transform: translateY(-2px);
       }
     }
 
+    .name::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+      animation: underlineGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes underlineGlow {
+      0%, 100% { opacity: 0.3; width: 60px; }
+      50% { opacity: 0.8; width: 120px; }
+    }
+
     .title {
-      font-size: 1.25rem;
-      font-weight: 600;
-      color: rgba(255, 255, 255, 0.85);
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.7);
       margin-bottom: 3rem;
-      letter-spacing: 1px;
+      letter-spacing: 3px;
       text-transform: uppercase;
-      background: linear-gradient(90deg, 
-        rgba(255, 255, 255, 0.9) 0%,
-        rgba(120, 119, 198, 0.8) 50%,
-        rgba(255, 255, 255, 0.9) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      animation: titleGlow 4s ease-in-out infinite;
+      position: relative;
     }
 
-    @keyframes titleGlow {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 1; }
+    .title::before,
+    .title::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 40px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+      transform: translateY(-50%);
     }
 
-    .buttons-container {
+    .title::before { left: -60px; }
+    .title::after { right: -60px; }
+
+    /* Enhanced buttons */
+    .buttons-grid {
       display: grid;
-      gap: 1.2rem;
+      gap: 1rem;
+      grid-template-columns: 1fr 1fr;
     }
 
     .button {
@@ -226,28 +330,32 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 1rem;
-      padding: 1.2rem 2rem;
+      gap: 0.8rem;
+      padding: 1.2rem 1.5rem;
       color: white;
       text-decoration: none;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 1rem;
-      transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       overflow: hidden;
       letter-spacing: 0.5px;
       text-transform: uppercase;
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(20px);
+      transform-style: preserve-3d;
     }
 
     .button::before {
       content: '';
       position: absolute;
       inset: 0;
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0.05) 100%);
       opacity: 0;
-      transition: opacity 0.4s ease;
-      border-radius: 18px;
+      transition: opacity 0.6s ease;
+      border-radius: 16px;
     }
 
     .button::after {
@@ -257,118 +365,319 @@
       left: 50%;
       width: 0;
       height: 0;
-      background: rgba(255, 255, 255, 0.2);
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
       border-radius: 50%;
       transform: translate(-50%, -50%);
-      transition: width 0.6s ease, height 0.6s ease;
+      transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .button:hover::before {
+      opacity: 1;
     }
 
     .button:hover::after {
-      width: 300px;
-      height: 300px;
+      width: 200px;
+      height: 200px;
     }
 
     .button:hover {
-      transform: translateY(-4px) scale(1.02);
-      border-color: rgba(255, 255, 255, 0.3);
+      transform: translateY(-6px) translateZ(20px) rotateX(2deg);
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(212, 175, 55, 0.1);
+    }
+
+    .button:active {
+      transform: translateY(-2px) translateZ(10px) scale(0.98);
     }
 
     .button-icon {
-      font-size: 1.3rem;
-      transition: all 0.3s ease;
+      font-size: 1.2rem;
+      transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
       z-index: 2;
       position: relative;
     }
 
     .button:hover .button-icon {
-      transform: scale(1.2) rotate(5deg);
+      transform: scale(1.2) rotate(10deg);
     }
 
-    .button span:last-child {
+    .button-text {
       z-index: 2;
       position: relative;
+      font-size: 0.85rem;
     }
 
-    /* Unique button styles */
+    /* Unique premium button styles */
     .button.call {
-      background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
-      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
     }
 
     .button.call:hover {
-      box-shadow: 0 15px 40px rgba(16, 185, 129, 0.5);
-      background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
+      background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+      box-shadow: 0 20px 40px rgba(16, 185, 129, 0.4);
     }
 
     .button.email {
-      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 50%, #1d4ed8 100%);
-      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      box-shadow: 0 8px 25px rgba(59, 130, 246, 0.25);
     }
 
     .button.email:hover {
-      box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
-      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #2563eb 100%);
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.4);
     }
 
     .button.website {
-      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%);
-      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+      box-shadow: 0 8px 25px rgba(139, 92, 246, 0.25);
     }
 
     .button.website:hover {
-      box-shadow: 0 15px 40px rgba(139, 92, 246, 0.5);
-      background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 50%, #7c3aed 100%);
+      background: linear-gradient(135deg, #a78bfa 0%, #8b5cf6 100%);
+      box-shadow: 0 20px 40px rgba(139, 92, 246, 0.4);
     }
 
     .button.contact {
-      background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
-      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
+      background: linear-gradient(135deg, var(--accent-gold) 0%, #B8860B 100%);
+      box-shadow: 0 8px 25px rgba(212, 175, 55, 0.25);
     }
 
     .button.contact:hover {
-      box-shadow: 0 15px 40px rgba(245, 158, 11, 0.5);
-      background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+      background: linear-gradient(135deg, #F4D03F 0%, var(--accent-gold) 100%);
+      box-shadow: 0 20px 40px rgba(212, 175, 55, 0.4);
+    }
+
+    /* Status indicator */
+    .status-indicator {
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
     }
 
     /* Responsive design */
-    @media (max-width: 520px) {
+    @media (max-width: 600px) {
       .card {
         padding: 2.5rem 2rem;
-        margin: 1rem 0.5rem;
-        border-radius: 28px;
+        margin: 1rem;
+        border-radius: 20px;
       }
       
       .name {
-        font-size: 2.25rem;
+        font-size: 2.5rem;
       }
       
       .title {
-        font-size: 1.1rem;
+        font-size: 1rem;
         margin-bottom: 2.5rem;
       }
-      
-      .button {
-        padding: 1.1rem 1.5rem;
-        font-size: 0.95rem;
+
+      .title::before,
+      .title::after {
+        width: 30px;
       }
 
-      .logo-glow {
-        width: 180px;
-        height: 180px;
+      .title::before { left: -45px; }
+      .title::after { right: -45px; }
+      
+      .buttons-grid {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+
+      .button {
+        padding: 1.3rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      .logo-aura {
+        width: 220px;
+        height: 220px;
+      }
+
+      .status-indicator {
+        top: 1.5rem;
+        right: 1.5rem;
       }
     }
 
-    @media (max-width: 380px) {
+    @media (max-width: 400px) {
       .name {
-        font-size: 1.9rem;
+        font-size: 2.2rem;
       }
       
-      .buttons-container {
-        gap: 1rem;
+      .card {
+        padding: 2rem 1.5rem;
       }
+
+      .title::before,
+      .title::after {
+        display: none;
+      }
+    }
+
+    /* Loading animation */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--primary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      animation: fadeOut 0.8s ease-out 2s forwards;
+    }
+
+    .loading-spinner {
+      width: 60px;
+      height: 60px;
+      border: 2px solid rgba(212, 175, 55, 0.2);
+      border-top: 2px solid var(--accent-gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
     }
   </style>
+</head>
+<body>
+  <!-- Loading screen -->
+  <div class="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Custom cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-follower"></div>
+
+  <!-- Background elements -->
+  <div class="background-container">
+    <div class="bg-pattern"></div>
+  </div>
+
+  <!-- Main card -->
+  <div class="card-container">
+    <div class="card">
+      <!-- Status indicator -->
+      <div class="status-indicator">
+        <div class="status-dot"></div>
+        <span>Available</span>
+      </div>
+
+      <!-- Logo section -->
+      <div class="logo-section">
+        <div class="logo-container">
+          <div class="logo-aura"></div>
+          <svg class="logo" width="200" height="90" viewBox="0 0 500 150" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#1a4a5c;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#2d5a6b;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#1a4a5c;stop-opacity:1" />
+              </linearGradient>
+              <filter id="premiumGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                <feMerge> 
+                  <feMergeNode in="coloredBlur"/>
+                  <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+              </filter>
+              <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#D4AF37;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#F4D03F;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#B8860B;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            
+            <!-- Enhanced shield -->
+            <path d="M20 30 C20 30 30 15 50 15 L100 15 C120 15 130 30 130 30 L130 85 C130 115 75 135 75 135 C75 135 20 115 20 85 Z" 
+                  fill="url(#shieldGradient)" stroke="url(#goldGradient)" stroke-width="2" filter="url(#premiumGlow)"/>
+            
+            <!-- Premium inner shield -->
+            <path d="M28 35 C28 35 35 25 50 25 L100 25 C115 25 122 35 122 35 L122 82 C122 106 75 122 75 122 C75 122 28 106 28 82 Z" 
+                  fill="#ffffff"/>
+            
+            <!-- Enhanced tool icon -->
+            <g transform="translate(75, 75)">
+              <circle cx="0" cy="-15" r="16" fill="none" stroke="url(#goldGradient)" stroke-width="4"/>
+              <circle cx="0" cy="-15" r="4" fill="url(#goldGradient)"/>
+              <rect x="-3" y="2" width="6" height="28" fill="url(#goldGradient)" rx="3"/>
+              <circle cx="0" cy="33" r="6" fill="url(#goldGradient)"/>
+              <circle cx="15" cy="-22" r="2" fill="#1a4a5c"/>
+              <circle cx="15" cy="-10" r="2" fill="#1a4a5c"/>
+              <circle cx="15" cy="2" r="2" fill="#1a4a5c"/>
+            </g>
+            
+            <!-- Enhanced company text -->
+            <text x="160" y="55" font-family="Space Grotesk, Inter, Arial, sans-serif" font-size="42" font-weight="700" fill="#1a4a5c">FIDELITY</text>
+            <text x="160" y="85" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="500" fill="#1a4a5c" letter-spacing="4px">MECHANICAL SOLUTIONS</text>
+          </svg>
+        </div>
+      </div>
+      
+      <!-- Name and title -->
+      <h1 class="name">Martín Pérez</h1>
+      <h2 class="title">HVAC Field Operations</h2>
+      
+      <!-- Enhanced buttons -->
+      <div class="buttons-grid">
+        <a href="tel:7132012842" class="button call">
+          <span class="button-icon">📞</span>
+          <span class="button-text">Call Direct</span>
+        </a>
+        
+        <a href="mailto:MartinPerez@Fidelitymechanicalsolutions.com" class="button email">
+          <span class="button-icon">✉️</span>
+          <span class="button-text">Email Me</span>
+        </a>
+        
+        <a href="https://fidelitymechanicalsolutions.com/#services" class="button website" target="_blank">
+          <span class="button-icon">🌐</span>
+          <span class="button-text">Our Services</span>
+        </a>
+        
+        <a href="#" class="button contact" onclick="downloadVCard(); return false;">
+          <span class="button-icon">💾</span>
+          <span class="button-text">Save Contact</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
   <script>
+    // Enhanced vCard download
     function downloadVCard() {
       const vCardData = `BEGIN:VCARD
 VERSION:3.0
@@ -385,116 +694,91 @@ END:VCARD`;
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'martin-perez.vcf';
+      link.download = 'martin-perez-premium.vcf';
       link.click();
       window.URL.revokeObjectURL(url);
     }
 
-    // Add some interactive sparkle effects
     document.addEventListener('DOMContentLoaded', function() {
+      // Custom cursor
+      const cursor = document.querySelector('.cursor');
+      const cursorFollower = document.querySelector('.cursor-follower');
+
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+        
+        setTimeout(() => {
+          cursorFollower.style.left = e.clientX + 'px';
+          cursorFollower.style.top = e.clientY + 'px';
+        }, 50);
+      });
+
+      // Enhanced card 3D interaction
       const card = document.querySelector('.card');
+      const cardContainer = document.querySelector('.card-container');
       
-      card.addEventListener('mousemove', function(e) {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
+      cardContainer.addEventListener('mousemove', function(e) {
+        const rect = cardContainer.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
         
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+        const rotateX = (y / rect.height) * -15;
+        const rotateY = (x / rect.width) * 15;
         
-        const rotateX = (y - centerY) / 10;
-        const rotateY = (centerX - x) / 10;
-        
-        card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        card.style.transform = `
+          translateZ(20px) 
+          rotateX(${rotateX}deg) 
+          rotateY(${rotateY}deg)
+          scale(1.02)
+        `;
       });
       
-      card.addEventListener('mouseleave', function() {
-        card.style.transform = 'translateY(0) rotateX(0deg) rotateY(0deg)';
+      cardContainer.addEventListener('mouseleave', function() {
+        card.style.transform = 'translateZ(0px) rotateX(0deg) rotateY(0deg) scale(1)';
+      });
+
+      // Create floating particles
+      function createParticle() {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 8 + 's';
+        particle.style.animationDuration = (8 + Math.random() * 4) + 's';
+        
+        document.querySelector('.background-container').appendChild(particle);
+        
+        setTimeout(() => {
+          particle.remove();
+        }, 12000);
+      }
+
+      // Generate particles periodically
+      setInterval(createParticle, 800);
+
+      // Enhanced button interactions
+      const buttons = document.querySelectorAll('.button');
+      buttons.forEach(button => {
+        button.addEventListener('mouseenter', function() {
+          cursor.style.transform = 'scale(1.5)';
+          cursorFollower.style.transform = 'scale(1.8)';
+        });
+        
+        button.addEventListener('mouseleave', function() {
+          cursor.style.transform = 'scale(1)';
+          cursorFollower.style.transform = 'scale(1)';
+        });
+      });
+
+      // Subtle parallax effect
+      document.addEventListener('mousemove', function(e) {
+        const x = (e.clientX / window.innerWidth) * 100;
+        const y = (e.clientY / window.innerHeight) * 100;
+        
+        document.querySelector('.bg-pattern').style.transform = 
+          `translate(${x * 0.02}px, ${y * 0.02}px) rotate(${x * 0.01}deg)`;
       });
     });
   </script>
-</head>
-<body>
-  <div class="card">
-    <div class="logo-container">
-      <div class="logo-glow"></div>
-      <svg class="logo" width="200" height="90" viewBox="0 0 500 150" xmlns="http://www.w3.org/2000/svg">
-        <!-- Shield shape with premium styling -->
-        <defs>
-          <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" style="stop-color:#1a4a5c;stop-opacity:1" />
-            <stop offset="50%" style="stop-color:#2d5a6b;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#1a4a5c;stop-opacity:1" />
-          </linearGradient>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-            <feMerge> 
-              <feMergeNode in="coloredBlur"/>
-              <feMergeNode in="SourceGraphic"/>
-            </feMerge>
-          </filter>
-        </defs>
-        
-        <!-- Main shield -->
-        <path d="M20 30 C20 30 30 15 50 15 L100 15 C120 15 130 30 130 30 L130 85 C130 115 75 135 75 135 C75 135 20 115 20 85 Z" 
-              fill="url(#shieldGradient)" stroke="#ffffff" stroke-width="2" filter="url(#glow)"/>
-        
-        <!-- Inner shield background -->
-        <path d="M28 35 C28 35 35 25 50 25 L100 25 C115 25 122 35 122 35 L122 82 C122 106 75 122 75 122 C75 122 28 106 28 82 Z" 
-              fill="#ffffff"/>
-        
-        <!-- Stylized premium wrench/tool icon -->
-        <g transform="translate(75, 75)">
-          <!-- Main circle with gradient -->
-          <defs>
-            <radialGradient id="toolGradient" cx="50%" cy="30%" r="70%">
-              <stop offset="0%" style="stop-color:#2d5a6b;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#1a4a5c;stop-opacity:1" />
-            </radialGradient>
-          </defs>
-          <circle cx="0" cy="-15" r="16" fill="none" stroke="url(#toolGradient)" stroke-width="4"/>
-          <!-- Inner elements -->
-          <circle cx="0" cy="-15" r="3" fill="#1a4a5c"/>
-          <!-- Premium handle -->
-          <rect x="-3" y="2" width="6" height="28" fill="url(#toolGradient)" rx="3"/>
-          <!-- Bottom circle -->
-          <circle cx="0" cy="33" r="6" fill="url(#toolGradient)"/>
-          <!-- Side elements with better positioning -->
-          <circle cx="15" cy="-22" r="2" fill="#1a4a5c"/>
-          <circle cx="15" cy="-10" r="2" fill="#1a4a5c"/>
-          <circle cx="15" cy="2" r="2" fill="#1a4a5c"/>
-        </g>
-        
-        <!-- Company text with premium styling -->
-        <text x="160" y="55" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="900" fill="#1a4a5c">FIDELITY</text>
-        <text x="160" y="85" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="#1a4a5c" letter-spacing="4px">MECHANICAL SOLUTIONS</text>
-      </svg>
-    </div>
-    
-    <h1 class="name">Martín Pérez</h1>
-    <h2 class="title">HVAC Field Operations</h2>
-    
-    <div class="buttons-container">
-      <a href="tel:7132012842" class="button call">
-        <span class="button-icon">📞</span>
-        <span>Call Now</span>
-      </a>
-      
-      <a href="mailto:MartinPerez@Fidelitymechanicalsolutions.com" class="button email">
-        <span class="button-icon">📧</span>
-        <span>Send Email</span>
-      </a>
-      
-      <a href="https://fidelitymechanicalsolutions.com/#services" class="button website" target="_blank">
-        <span class="button-icon">🌐</span>
-        <span>Our Services</span>
-      </a>
-      
-      <a href="#" class="button contact" onclick="downloadVCard(); return false;">
-        <span class="button-icon">📇</span>
-        <span>Save Contact</span>
-      </a>
-    </div>
-  </div>
 </body>
 </html>
