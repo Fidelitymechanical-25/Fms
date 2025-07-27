@@ -282,12 +282,62 @@
       }
     }
   </style>
+  <script>
+    function downloadVCard() {
+      const vCardData = `BEGIN:VCARD
+VERSION:3.0
+FN:Martín Pérez
+N:Pérez;Martín;;;
+ORG:Fidelity Mechanical Solutions
+TITLE:HVAC Field Operations
+TEL:+17132012842
+EMAIL:MartinPerez@Fidelitymechanicalsolutions.com
+URL:https://fidelitymechanicalsolutions.com/#services
+END:VCARD`;
+
+      const blob = new Blob([vCardData], { type: 'text/vcard' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'martin-perez.vcf';
+      link.click();
+      window.URL.revokeObjectURL(url);
+    }
+  </script>
 </head>
 <body>
   <div class="card">
     <div class="logo-container">
       <div class="logo-glow"></div>
-      <img class="logo" src="fidelity-logo.png" alt="Fidelity Logo">
+      <svg class="logo" width="140" height="60" viewBox="0 0 500 150" xmlns="http://www.w3.org/2000/svg">
+        <!-- Shield shape -->
+        <path d="M20 30 C20 30 30 20 50 20 L100 20 C120 20 130 30 130 30 L130 80 C130 110 75 130 75 130 C75 130 20 110 20 80 Z" 
+              fill="#1a4a5c" stroke="#1a4a5c" stroke-width="2"/>
+        
+        <!-- Inner shield background -->
+        <path d="M28 35 C28 35 35 28 50 28 L100 28 C115 28 122 35 122 35 L122 78 C122 102 75 118 75 118 C75 118 28 102 28 78 Z" 
+              fill="#ffffff"/>
+        
+        <!-- Stylized wrench/tool icon -->
+        <g transform="translate(75, 75)">
+          <!-- Main circle -->
+          <circle cx="0" cy="-15" r="15" fill="none" stroke="#1a4a5c" stroke-width="3"/>
+          <!-- Inner dot -->
+          <circle cx="0" cy="-15" r="2" fill="#1a4a5c"/>
+          <!-- Handle -->
+          <rect x="-2" y="2" width="4" height="25" fill="#1a4a5c" rx="2"/>
+          <!-- Bottom circle -->
+          <circle cx="0" cy="30" r="5" fill="#1a4a5c"/>
+          <!-- Side elements -->
+          <circle cx="12" cy="-20" r="1.5" fill="#1a4a5c"/>
+          <circle cx="12" cy="-10" r="1.5" fill="#1a4a5c"/>
+          <circle cx="12" cy="0" r="1.5" fill="#1a4a5c"/>
+        </g>
+        
+        <!-- Company text -->
+        <text x="160" y="50" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="700" fill="#1a4a5c">FIDELITY</text>
+        <text x="160" y="80" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="500" fill="#1a4a5c" letter-spacing="3px">MECHANICAL SOLUTIONS</text>
+      </svg>
     </div>
     
     <h1 class="name">Martín Pérez</h1>
@@ -304,12 +354,12 @@
         <span>Email</span>
       </a>
       
-      <a href="https://fidelitymechanicalsolutions.com" class="button website" target="_blank">
+      <a href="https://fidelitymechanicalsolutions.com/#services" class="button website" target="_blank">
         <span class="button-icon">🌐</span>
         <span>Visit Website</span>
       </a>
       
-      <a href="martin-perez.vcf" class="button contact" download>
+      <a href="#" class="button contact" onclick="downloadVCard(); return false;">
         <span class="button-icon">📇</span>
         <span>Save Contact</span>
       </a>
