@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Martín Pérez - Digital Business Card</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0c1426 0%, #1a2332 35%, #0f1b2e 100%);
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Animated background elements */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.08) 0%, transparent 50%),
+                  radial-gradient(circle at 80% 20%, rgba(255, 121, 198, 0.05) 0%, transparent 50%),
+                  radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.03) 0%, transparent 50%);
+      animation: drift 20s ease-in-out infinite;
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      33% { transform: translate(30px, -30px) rotate(120deg); }
+      66% { transform: translate(-20px, 20px) rotate(240deg); }
+    }
+
+    .card {
+      position: relative;
+      max-width: 420px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 2.5rem;
+      text-align: center;
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transform: translateY(0);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      animation: cardFloat 6s ease-in-out infinite;
+    }
+
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: xor;
+      -webkit-mask-composite: xor;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 
+        0 35px 60px -12px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    .logo-container {
+      position: relative;
+      margin-bottom: 2rem;
+      display: inline-block;
+    }
+
+    .logo {
+      max-width: 140px;
+      height: auto;
+      filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .logo-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(230, 57, 70, 0.2) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 0.1; transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    .name {
+      font-size: 2.25rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(135deg, #ffffff 0%, #e0e7ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .title {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .buttons-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .button {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      padding: 1rem 1.5rem;
+      background: linear-gradient(135deg, #e63946 0%, #d62839 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 16px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      letter-spacing: 0.3px;
+    }
+
+    .button::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .button:hover::before {
+      opacity: 1;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 12px 25px rgba(230, 57, 70, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.2);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .button:active {
+      transform: translateY(0);
+    }
+
+    .button-icon {
+      font-size: 1.1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .button:hover .button-icon {
+      transform: scale(1.1);
+    }
+
+    /* Special styling for different button types */
+    .button.call {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .button.call:hover {
+      box-shadow: 
+        0 12px 25px rgba(16, 185, 129, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .button.email {
+      background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    }
+
+    .button.email:hover {
+      box-shadow: 
+        0 12px 25px rgba(59, 130, 246, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .button.website {
+      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    }
+
+    .button.website:hover {
+      box-shadow: 
+        0 12px 25px rgba(139, 92, 246, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .button.contact {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    }
+
+    .button.contact:hover {
+      box-shadow: 
+        0 12px 25px rgba(245, 158, 11, 0.4),
+        0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Responsive design */
+    @media (max-width: 480px) {
+      .card {
+        padding: 2rem 1.5rem;
+        margin: 1rem;
+      }
+      
+      .name {
+        font-size: 1.75rem;
+      }
+      
+      .title {
+        font-size: 1rem;
+      }
+      
+      .button {
+        padding: 0.9rem 1.25rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Smooth entrance animation */
+    .card {
+      animation: fadeInUp 0.8s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo-container">
+      <div class="logo-glow"></div>
+      <img class="logo" src="fidelity-logo.png" alt="Fidelity Logo">
+    </div>
+    
+    <h1 class="name">Martín Pérez</h1>
+    <h2 class="title">HVAC Field Operations</h2>
+    
+    <div class="buttons-container">
+      <a href="tel:7132012842" class="button call">
+        <span class="button-icon">📞</span>
+        <span>Call</span>
+      </a>
+      
+      <a href="mailto:MartinPerez@Fidelitymechanicalsolutions.com" class="button email">
+        <span class="button-icon">📧</span>
+        <span>Email</span>
+      </a>
+      
+      <a href="https://fidelitymechanicalsolutions.com" class="button website" target="_blank">
+        <span class="button-icon">🌐</span>
+        <span>Visit Website</span>
+      </a>
+      
+      <a href="martin-perez.vcf" class="button contact" download>
+        <span class="button-icon">📇</span>
+        <span>Save Contact</span>
+      </a>
+    </div>
+  </div>
+</body>
+</html>
